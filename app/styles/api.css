@@ -14,8 +14,9 @@ body {
   	top: 0;
 	display: inline;
 	height: 1em;
-	opacity: 0.6;
-    filter: alpha(opacity=60); /* For IE8 and earlier */
+	width: 1.5em;
+	opacity: 0.45;
+    filter: alpha(opacity=45); /* For IE8 and earlier */
 }
 
 /* Monitor box */
