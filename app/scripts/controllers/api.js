@@ -3,30 +3,56 @@
 angular.module('dashboardApp')
 .controller('ApiCtrl', ['$scope', '$interval', '$location', 'ApiService', function($scope, $interval, $location, ApiService) {
 
-	var fixedEnvironment = $location.search().environment;
+    var rotateInterval;
 
-	// TODO: REFACTOR THIS!
-	if (fixedEnvironment && fixedEnvironment.length > 0) {
-		$scope.status = ApiService.getStatus(fixedEnvironment);
-  		$scope.lines = Math.ceil($scope.status.apis.length / 3);
-  		return;
-	}
+    $scope.init = function() {
 
-  	var environments = ApiService.getEnvironments();
-  	var index = 0;
-  	$interval(function() {
+      var fixedEnvironment = $location.search().environment;
+      var delay = $location.search().delay;
 
-  		$scope.status = {}
-  		var environment = environments[index];
+      // Fixed environment
+      if (fixedEnvironment && fixedEnvironment.length > 0) {
+        $scope.getStatus(fixedEnvironment);
+        return;
+      }
 
-  		$scope.status = ApiService.getStatus(environment.code);
-  		$scope.lines = Math.ceil($scope.status.apis.length / 3);
+      // Rotate between environments
+      $scope.delay = delay || 2000;
+      $scope.environments = ApiService.getEnvironments();
+      $scope.index = 0;
 
-  		index = (index >= environments.length - 1) ? 0 : ++index;
-  		
-  	}, 5000)
+      $scope.stopRotateInterval();
+      rotateInterval = $interval(function() { $scope.rotateEnvironment() }, $scope.delay)   
+    }
+
+    $scope.$on('$destroy', function() {
+      
+      // Make sure that the interval is destroyed too
+      $scope.stopRotateInterval();
+    });
+
+    $scope.stopRotateInterval = function() {
+
+      if (angular.isDefined(rotateInterval)) {
+        $interval.cancel(rotateInterval);
+        rotateInterval = undefined;
+      }
+    };
+    
+    $scope.rotateEnvironment = function() {
+
+      console.log("rotating", $scope.index, $scope.environments[$scope.index].code, $scope.delay)
+      $scope.status = {}
+      $scope.getStatus($scope.environments[$scope.index].code);
+      $scope.index = ($scope.index >= $scope.environments.length - 1) ? 0 : ++$scope.index;
+    }
+
+    $scope.getStatus = function(environmentCode) {
+
+      $scope.status = ApiService.getStatus(environmentCode);
+      $scope.lines = Math.ceil($scope.status.apis.length / 3);
+    } 
   	
-
-  	
+    $scope.init();
 
 }]);
