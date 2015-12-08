@@ -4,6 +4,7 @@ angular.module('dashboardApp')
 .controller('ApiCtrl', ['$scope', '$interval', '$location', 'ApiService', function($scope, $interval, $location, ApiService) {
 
     var rotateInterval;
+    var defaultDelay = 5000;
 
     $scope.init = function() {
 
@@ -17,10 +18,11 @@ angular.module('dashboardApp')
       }
 
       // Rotate between environments
-      $scope.delay = delay || 2000;
+      $scope.delay = delay || defaultDelay;
       $scope.environments = ApiService.getEnvironments();
       $scope.index = 0;
 
+      $scope.rotateEnvironment();
       $scope.stopRotateInterval();
       rotateInterval = $interval(function() { $scope.rotateEnvironment() }, $scope.delay)   
     }
