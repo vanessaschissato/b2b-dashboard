@@ -1,9 +1,19 @@
 body {
 	color: white;
 }
+ 
+ .fade-in {
+ 	transition: all 1s ease-in-out;
+ 	opacity:0.50;
+ }
+
+ .fade-out {
+ 	transition: all 1s ease-in-out;
+ 	opacity:1;
+ }
 
 /* Monitor title */
-.monitor-title {
+.monitor-title, .dropdown-menu {
 	font-size: 3.5em; /* compatibility */
 	font-size: 3vw;
 	color: #666;
@@ -15,6 +25,21 @@ body {
 	opacity: 0.45;
 	margin-bottom:0.2em;
     filter: alpha(opacity=45); /* For IE8 and earlier */
+}
+
+.dropdown {
+	display: inline;
+	cursor: pointer;
+}
+
+.dropdown .caret {
+	border-top: 0.2em dashed;
+  	border-right: 0.2em solid transparent;
+  	border-left: 0.2em solid transparent;
+}
+
+.dropdown:hover {
+	color:black;
 }
 
 .controls {
@@ -67,11 +92,22 @@ body {
 @media (max-width: 991px)
 {	
 	.monitor-title {
-		font-size: 1.4em;
+		font-size: 1.5em;
+	}
+
+	.dropdown-menu {
+		font-size: 1em;
 	}
 
 	.controls {
 		text-align: center;
+		font-size: 1.5em;
+	}
+
+	.dropdown .caret {
+		border-top: 0.3em dashed;
+	  	border-right: 0.3em solid transparent;
+	  	border-left: 0.3em solid transparent;
 	}
 
 	.monitor-box {

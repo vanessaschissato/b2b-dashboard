@@ -9,21 +9,22 @@ angular.module('dashboardApp')
 
     $scope.init = function() {
 
+        $scope.environments = ApiService.getEnvironments();
+
+        // Params
         var fixedEnvironment = $location.search().environment;
-        var delay = $location.search().delay;
+        $scope.delay = $location.search().delay || defaultDelay;
+        $scope.delay = ($scope.delay < minDelay) ? minDelay : $scope.delay;
 
         // Fixed environment
         if (fixedEnvironment && fixedEnvironment.length > 0) {
           $scope.getStatus(fixedEnvironment);
+          $scope.setIndexTo(fixedEnvironment);
           return;
         }
 
-        // Rotate between environments
-        $scope.delay = delay || defaultDelay;
-        $scope.delay = ($scope.delay < minDelay) ? minDelay : $scope.delay;
-        $scope.environments = ApiService.getEnvironments();
+        // Setup rotation between environments
         $scope.index = 0;
-
         $scope.stopRotateInterval();
         $scope.rotateEnvironment();
         $scope.startRotateInterval();
@@ -41,6 +42,14 @@ angular.module('dashboardApp')
 
     $scope.previousIndex = function() {
         $scope.index = ($scope.index <= 0) ? $scope.environments.length - 1 : --$scope.index;
+    }
+
+    $scope.setIndexTo = function(code) {
+        for (var i = 0; i < $scope.environments.length; i++) { 
+            if ($scope.environments[i].code == code) {
+                $scope.index = i;
+            } 
+        }
     }
 
     $scope.nextIndex = function() {
@@ -91,7 +100,8 @@ angular.module('dashboardApp')
     
     $scope.rotateEnvironment = function() {
 
-      console.log("rotating", $scope.index, $scope.environments[$scope.index].code, $scope.delay)
+      //$scope.animationClass = 'fade-in';
+      console.log("rotating", $scope.index, $scope.environments, $scope.delay)
       $scope.status = {}
       $scope.getStatus($scope.environments[$scope.index].code);
     }
