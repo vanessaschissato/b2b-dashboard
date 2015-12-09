@@ -1,30 +1,21 @@
 'use strict';
 
 angular.module('dashboardApp')
-.service('ApiService', function() {
+.service('ApiService', ['$q', '$http', function($q, $http) {
 
 	 // Mocked
 	this.getEnvironments = function() {
-		
-	  	var response = {
-	  		"environments": 
-	  		[
-	  			{
-	    			"code": "ar",
-	    			"name": "Argentina"
-	    		},
-	    		{
-	    			"code": "co",
-	    			"name": "Colombia"
-	    		},
-	    		{
-	    			"code": "mx",
-	    			"name": "Mexico"
-	    		}
-			]
-		}
 
-		return response.environments;
+		var deferred = $q.defer();
+ 
+	    return $http.get('http://www.nessauepa.com.br/dashboard/app/environments.json')
+	        .then(function (response) {
+	            deferred.resolve(response.data.environments);
+	            return deferred.promise;
+	        }, function (response) {
+	            deferred.reject(response);
+	            return deferred.promise;
+	        });
 	}
 
     // Mocked
@@ -96,4 +87,4 @@ angular.module('dashboardApp')
 		return response;
 	}
 
-});
+}]);

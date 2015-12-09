@@ -9,9 +9,20 @@ angular.module('dashboardApp')
 
     $scope.init = function() {
 
-        $scope.environments = ApiService.getEnvironments();
+        ApiService.getEnvironments().then(
+            function (result) {
+              console.log("result success", result)
+                $scope.environments = result;
+                $scope.showView();
+            },
+            function (error) {
+                console.log("Error getting environments", error.statusText);
+            }
+        );
+    }
 
-        // Params
+    $scope.showView = function() {
+
         var fixedEnvironment = $location.search().environment;
         $scope.delay = $location.search().delay || defaultDelay;
         $scope.delay = ($scope.delay < minDelay) ? minDelay : $scope.delay;

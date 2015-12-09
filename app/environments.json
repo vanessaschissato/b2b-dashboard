@@ -1,0 +1,24 @@
+{
+  "environments": [
+    {
+      "code": "ar",
+      "name": "Argentina"
+    },
+    {
+      "code": "au",
+      "name": "Austrália"
+    },
+    {
+      "code": "br",
+      "name": "Brasil"
+    },
+    {
+      "code": "co",
+      "name": "Colombia"
+    },
+    {
+      "code": "mx",
+      "name": "Mexico"
+    }
+  ]
+}
