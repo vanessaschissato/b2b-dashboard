@@ -4,20 +4,36 @@ body {
 
 /* Monitor title */
 .monitor-title {
-	border: solid 10px white;
 	font-size: 3.5em; /* compatibility */
 	font-size: 3vw;
 	color: #666;
 }
 
 .monitor-title img {
-	position: relative;
-  	top: 0;
-	display: inline;
-	height: 1em;
-	width: 1.5em;
+	height: 0.7em;
+	width: 1.2em;
 	opacity: 0.45;
+	margin-bottom:0.2em;
     filter: alpha(opacity=45); /* For IE8 and earlier */
+}
+
+.controls {
+	text-align: right;
+}
+
+.controls button {
+	cursor: pointer;
+	border: 0px;
+  	background-color: transparent;
+  	vertical-align: middle;
+}
+
+.controls button:hover {
+	color: black;
+}
+
+.controls button:focus {
+	outline: 0;
 }
 
 /* Monitor box */
@@ -38,10 +54,24 @@ body {
 	font-size: 2vw;
 }
 
+.success {
+	background-color: #79C447;
+}
+.timeout {
+	background-color: #FABB3D;
+}
+.error {
+	background-color: #FF5454;
+}
+
 @media (max-width: 991px)
 {	
 	.monitor-title {
 		font-size: 1.4em;
+	}
+
+	.controls {
+		text-align: center;
 	}
 
 	.monitor-box {
@@ -56,14 +86,4 @@ body {
 		font-size: 0.9em;
 	}
 
-}
-
-.success {
-	background-color: #79C447;
-}
-.timeout {
-	background-color: #FABB3D;
-}
-.error {
-	background-color: #FF5454;
 }

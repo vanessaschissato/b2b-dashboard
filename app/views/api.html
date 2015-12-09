@@ -2,19 +2,22 @@
 <div>
 	<div class="row">
 
-		<div class="col-md-9 monitor-title">
-			<span>ABInbev B2B API - </span>
-			<img src="http://flags.fmcdn.net/data/flags/normal/{{status.geral.environment.code}}.png" />
-			<span>{{status.geral.environment.name}}</span>
-		</div>
+		<div class="monitor-title">
 
-		<div class="cold-md-3" style="color:black">
-			<span ng-click="previousEnvironment()">BACK</span>
-			<span ng-click="togglePlay()">
-				<span ng-if="isRotating()">PAUSE</span>
-				<span ng-if="!isRotating()">PLAY</span>
-			</span>
-			<span ng-click="nextEnvironment()">NEXT</span>
+			<div class="col-md-8">
+				<span>ABInbev B2B API - </span>
+				<img src="http://flags.fmcdn.net/data/flags/normal/{{status.geral.environment.code}}.png" />
+				<span>{{status.geral.environment.name}}</span>
+			</div>
+
+			<div class="col-md-4 controls">
+				<button class="glyphicon glyphicon-backward" ng-click="previousEnvironment()"></button>
+				<span ng-click="togglePlay()">
+					<button class="glyphicon glyphicon-pause" ng-if="isRotating()"></button>
+					<button class="glyphicon glyphicon-play" ng-if="!isRotating()"></button>
+				</span>
+				<button class="glyphicon glyphicon-forward" ng-click="nextEnvironment()"></button>
+			</div>
 		</div>
 	</div>
 
