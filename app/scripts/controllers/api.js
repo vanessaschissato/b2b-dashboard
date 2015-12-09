@@ -11,12 +11,11 @@ angular.module('dashboardApp')
 
         ApiService.getEnvironments().then(
             function (result) {
-              console.log("result success", result)
                 $scope.environments = result;
                 $scope.showView();
             },
             function (error) {
-                console.log("Error getting environments", error.statusText);
+                console.log("GET environments - FAIL", error.statusText);
             }
         );
     }
@@ -112,15 +111,22 @@ angular.module('dashboardApp')
     $scope.rotateEnvironment = function() {
 
       //$scope.animationClass = 'fade-in';
-      console.log("rotating", $scope.index, $scope.environments, $scope.delay)
+      console.log("rotating", $scope.index, $scope.environments[$scope.index], $scope.delay + "s")
       $scope.status = {}
       $scope.getStatus($scope.environments[$scope.index].code);
     }
 
     $scope.getStatus = function(environmentCode) {
 
-      $scope.status = ApiService.getStatus(environmentCode);
-      $scope.lines = Math.ceil($scope.status.apis.length / 3);
+      ApiService.getStatus(environmentCode).then(
+            function (result) {
+                $scope.status = result;
+                $scope.lines = Math.ceil($scope.status.apis.length / 3);
+            },
+            function (error) {
+                console.log("GET status - FAIL", error.statusText);
+            }
+        );
     } 
   	
     $scope.init();
