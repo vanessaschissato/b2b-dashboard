@@ -1,11 +1,9 @@
 'use strict';
 
 angular.module('dashboardApp')
-.controller('ApiCtrl', ['$scope', '$interval', '$location', 'ApiService', function($scope, $interval, $location, ApiService) {
+.controller('ApiCtrl', ['CONFIG', '$scope', '$interval', '$location', 'ApiService', function(CONFIG, $scope, $interval, $location, ApiService) {
 
     var rotateInterval;
-    var defaultDelay = 5;
-    var minDelay = 1;
 
     $scope.init = function() {
 
@@ -23,8 +21,8 @@ angular.module('dashboardApp')
     $scope.showView = function() {
 
         var fixedEnvironment = $location.search().environment;
-        $scope.delay = $location.search().delay || defaultDelay;
-        $scope.delay = ($scope.delay < minDelay) ? minDelay : $scope.delay;
+        $scope.delay = $location.search().delay || CONFIG.defaultDelay;
+        $scope.delay = ($scope.delay < CONFIG.minDelay) ? CONFIG.minDelay : $scope.delay;
 
         // Fixed environment
         if (fixedEnvironment && fixedEnvironment.length > 0) {

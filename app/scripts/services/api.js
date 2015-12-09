@@ -1,13 +1,16 @@
 'use strict';
 
 angular.module('dashboardApp')
-.service('ApiService', ['$q', '$http', function($q, $http) {
+.service('ApiService', ['CONFIG', '$q', '$http', function(CONFIG, $q, $http) {
+
+	//var environmentsEndpoint = 'http://www.nessauepa.com.br/dashboard/app/environments.json';
+	//var statusEndpoint = 'http://www.nessauepa.com.br/dashboard/app/status.json';
 
 	this.getEnvironments = function() {
 
 		var deferred = $q.defer();
  
-	    return $http.get('http://www.nessauepa.com.br/dashboard/app/environments.json')
+	    return $http.get(CONFIG.environmentsEndpoint)
 	        .then(function (response) {
 	            deferred.resolve(response.data.environments);
 	            return deferred.promise;
@@ -21,7 +24,7 @@ angular.module('dashboardApp')
 
 		var deferred = $q.defer();
  
-	    return $http.get('http://www.nessauepa.com.br/dashboard/app/status.json?environment=' + code)
+	    return $http.get(CONFIG.statusEndpoint + '?environment=' + code)
 	        .then(function (response) {
 	            deferred.resolve(response.data);
 	            return deferred.promise;
