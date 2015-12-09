@@ -1,15 +1,14 @@
 'use strict';
 
-// Declare app level module which depends on views, and components
 angular.module('dashboardApp', [
-  'ngRoute',
+  	'ngRoute'
 ]).
-config(['$routeProvider', function($routeProvider) {
+config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
   
-  $routeProvider.otherwise({redirectTo: '/api'});
+  	$routeProvider.otherwise({redirectTo: '/api'});
 
-  $routeProvider.when('/api', {
-    templateUrl: 'views/api.html',
-    controller: 'ApiCtrl'
-  });
+  	$routeProvider.when('/api', {
+    	templateUrl: 'views/api.html',
+    	controller: 'ApiCtrl'
+  	});
 }])

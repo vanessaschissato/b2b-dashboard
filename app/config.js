@@ -1,6 +1,6 @@
 angular.module('dashboardApp').constant('CONFIG', {
 	minDelay: 1,
-	defaultDelay: 5,
-  	environmentsEndpoint: 'http://www.nessauepa.com.br/dashboard/app/environments.json',
-  	statusEndpoint: 'http://www.nessauepa.com.br/dashboard/app/status.json'
+	defaultDelay: 10,
+  	environmentsEndpoint: 'http://52.26.93.55:3000/environments',
+  	statusEndpoint: 'http://52.26.93.55:3000/status'
 });

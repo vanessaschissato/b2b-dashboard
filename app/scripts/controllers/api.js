@@ -13,7 +13,8 @@ angular.module('dashboardApp')
                 $scope.showView();
             },
             function (error) {
-                console.log("GET environments - FAIL", error.statusText);
+                alert("Fail to get environments [Error = "+ error.statusText +"]")
+                console.log("GET environments - FAIL", error);
             }
         );
     }
@@ -108,21 +109,24 @@ angular.module('dashboardApp')
     
     $scope.rotateEnvironment = function() {
 
-      //$scope.animationClass = 'fade-in';
-      console.log("rotating", $scope.index, $scope.environments[$scope.index], $scope.delay + "s")
-      $scope.status = {}
+      //$scope.status = undefined;
+      $scope.fade = true;
       $scope.getStatus($scope.environments[$scope.index].code);
     }
 
     $scope.getStatus = function(environmentCode) {
 
+      console.log("rotating", $scope.index, $scope.environments[$scope.index], $scope.delay + "s")
       ApiService.getStatus(environmentCode).then(
             function (result) {
+                $scope.fade = false;
                 $scope.status = result;
                 $scope.lines = Math.ceil($scope.status.apis.length / 3);
             },
             function (error) {
-                console.log("GET status - FAIL", error.statusText);
+                $scope.fade = false;
+                alert("Fail to get statuses to " + environmentCode + " [Error = "+ error.statusText +"]")
+                console.log("GET status - FAIL", error);
             }
         );
     } 

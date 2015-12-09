@@ -3,9 +3,6 @@
 angular.module('dashboardApp')
 .service('ApiService', ['CONFIG', '$q', '$http', function(CONFIG, $q, $http) {
 
-	//var environmentsEndpoint = 'http://www.nessauepa.com.br/dashboard/app/environments.json';
-	//var statusEndpoint = 'http://www.nessauepa.com.br/dashboard/app/status.json';
-
 	this.getEnvironments = function() {
 
 		var deferred = $q.defer();
@@ -24,7 +21,7 @@ angular.module('dashboardApp')
 
 		var deferred = $q.defer();
  
-	    return $http.get(CONFIG.statusEndpoint + '?environment=' + code)
+	    return $http.get(CONFIG.statusEndpoint + '?env=' + code)
 	        .then(function (response) {
 	            deferred.resolve(response.data);
 	            return deferred.promise;

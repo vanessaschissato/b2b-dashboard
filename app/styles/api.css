@@ -1,16 +1,16 @@
 body {
 	color: white;
 }
- 
- .fade-in {
- 	transition: all 1s ease-in-out;
- 	opacity:0.50;
- }
 
- .fade-out {
- 	transition: all 1s ease-in-out;
- 	opacity:1;
- }
+.animation {
+	-webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    -ms-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+
+.fade-in {opacity:0.2}
 
 /* Monitor title */
 .monitor-title, .dropdown-menu {
