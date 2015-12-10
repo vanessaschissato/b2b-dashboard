@@ -35,20 +35,12 @@ angular.module('dashboardApp')
 
         // Setup rotation between environments
         $scope.index = 0;
-        //$scope.stopRotateInterval();
         $scope.rotateEnvironment();
-        //$scope.startRotateInterval();
     }
 
-    //$scope.$on('$destroy', function() {
-      
-        // Make sure that the interval is destroyed too
-    //    $scope.stopRotateInterval();
-    //});
 
     $scope.isRotating = function() {
         return isRotating;
-    //    return angular.isDefined(rotateInterval);
     }
 
     $scope.previousIndex = function() {
@@ -95,20 +87,6 @@ angular.module('dashboardApp')
       $scope.fade = true;
       $scope.nextEnvironment();
     }
-
-    /*$scope.startRotateInterval = function() {
-      $scope.startTimer();
-      rotateInterval = $interval(function() { $scope.nextEnvironment() }, ($scope.delay * 1000));  
-    }
-
-    $scope.stopRotateInterval = function() {
-
-      $scope.stopTimer();
-      if ($scope.isRotating()) {
-        $interval.cancel(rotateInterval);
-        rotateInterval = undefined;
-      }
-    };*/
     
     $scope.rotateEnvironment = function() {
 

@@ -40,7 +40,7 @@
 	</div>
 
 	<div class="row">
-		<div ng-repeat="api in status.apis" class="col-md-4 monitor-box" ng-class="{'success': api.code == 'SUCCESS', 'timeout': api.code == 'TIMEOUT', 'error': api.code == 'ERROR'}" style="min-height:calc({{100 / lines}}vh - {{110 / lines}}px)">
+		<div ng-repeat="api in status.apis" class="col-md-4 monitor-box" ng-class="{'success': api.code == 'SUCCESS', 'timeout': api.code == 'TIMEOUT', 'error': api.code == 'ERROR'}" style="min-height:calc({{100 / lines}}vh - {{115 / lines}}px)">
 			<span class="title">{{api.name}}</span>
 			<span class="time">{{api.time | number:0}} ms</span>
 		</div>
