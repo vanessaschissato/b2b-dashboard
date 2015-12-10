@@ -7,11 +7,11 @@
 
 			<div class="col-md-8">
 				<span>ABInbev B2B API - </span>
-				<img src="http://flags.fmcdn.net/data/flags/normal/{{status.geral.environment.code}}.png" />
+				<img src="http://flags.fmcdn.net/data/flags/normal/{{status.general.environment.code}}.png" />
 
 				<div class="dropdown">
 					<span class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-						{{status.geral.environment.name}}
+						{{status.general.environment.name}}
 						<span class="caret"></span>
 					</span>
 					<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
@@ -47,6 +47,6 @@
 	</div>
 
 	<div class="row">
-		<div class="generated col-md-12">Generated {{status.geral.generated}}</div>
+		<div class="generated col-md-12">Generated {{generated | date:'medium'}} ({{generatedMinutesAgo}} minutes ago)</div>
 	</div>
 </div>

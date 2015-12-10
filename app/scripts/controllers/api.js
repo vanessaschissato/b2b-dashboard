@@ -125,6 +125,10 @@ angular.module('dashboardApp')
 
                 $scope.fade = false;
                 $scope.status = result;
+                var generated = moment.utc(result.general.generated);
+                var diff = moment.duration(moment.utc().diff(generated));
+                $scope.generatedMinutesAgo = Math.round(diff.asMinutes());
+                $scope.generated = generated.toDate();
                 $scope.lines = Math.ceil($scope.status.apis.length / 3);
                 if (start) $scope.startTimer();
             },
