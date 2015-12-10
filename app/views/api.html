@@ -16,7 +16,7 @@
 					</span>
 					<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
 						<li ng-repeat="env in environments">
-							<a href="#/api?environment={{env.code}}">{{env.name}}</a>
+							<a href="#" ng-click="fixEnvironment(env.code)">{{env.name}}</a>
 						</li>
 					</ul>
 				</div>

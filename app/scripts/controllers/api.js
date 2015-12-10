@@ -28,8 +28,7 @@ angular.module('dashboardApp')
 
         // Fixed environment
         if (fixedEnvironment && fixedEnvironment.length > 0) {
-          $scope.getStatus(fixedEnvironment, false);
-          $scope.setIndexTo(fixedEnvironment);
+          $scope.fixEnvironment(fixedEnvironment);
           return;
         }
 
@@ -38,6 +37,10 @@ angular.module('dashboardApp')
         $scope.rotateEnvironment();
     }
 
+    $scope.fixEnvironment = function(code) {
+        $scope.getStatus(code, false);
+        $scope.setIndexTo(code);
+    } 
 
     $scope.isRotating = function() {
         return isRotating;
@@ -75,6 +78,10 @@ angular.module('dashboardApp')
         $scope.rotateEnvironment();
     }
 
+    $scope.timeout = function() {
+      $scope.nextEnvironment();
+    }
+
     $scope.togglePlay = function() {
       if ($scope.isRotating()) {
         $scope.stopTimer();
@@ -82,15 +89,9 @@ angular.module('dashboardApp')
         $scope.startTimer();
       }
     }
-
-    $scope.timeout = function() {
-      $scope.fade = true;
-      $scope.nextEnvironment();
-    }
     
     $scope.rotateEnvironment = function() {
 
-      //$scope.status = undefined;
       $scope.fade = true;
       $scope.getStatus($scope.environments[$scope.index].code, true);
     }
@@ -101,14 +102,19 @@ angular.module('dashboardApp')
       ApiService.getStatus(environmentCode).then(
             function (result) {
 
-                $scope.fade = false;
                 $scope.status = result;
                 var generated = moment.utc(result.general.generated);
                 var diff = moment.duration(moment.utc().diff(generated));
                 $scope.generatedMinutesAgo = Math.round(diff.asMinutes());
                 $scope.generated = generated.toDate();
                 $scope.lines = Math.ceil($scope.status.apis.length / 3);
-                if (start) $scope.startTimer();
+                
+                if (!start) {
+                  $scope.stopAndResetTimer();
+                } else {
+                  $scope.startTimer();
+                }
+                $scope.fade = false;
             },
             function (error) {
                 $scope.fade = false;
