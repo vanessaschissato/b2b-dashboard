@@ -4,6 +4,7 @@ angular.module('dashboardApp')
 .controller('ApiCtrl', ['CONFIG', '$scope', '$interval', '$location', 'ApiService', function(CONFIG, $scope, $interval, $location, ApiService) {
 
     var rotateInterval;
+    var isRotating;
 
     $scope.init = function() {
 
@@ -27,26 +28,27 @@ angular.module('dashboardApp')
 
         // Fixed environment
         if (fixedEnvironment && fixedEnvironment.length > 0) {
-          $scope.getStatus(fixedEnvironment);
+          $scope.getStatus(fixedEnvironment, false);
           $scope.setIndexTo(fixedEnvironment);
           return;
         }
 
         // Setup rotation between environments
         $scope.index = 0;
-        $scope.stopRotateInterval();
+        //$scope.stopRotateInterval();
         $scope.rotateEnvironment();
-        $scope.startRotateInterval();
+        //$scope.startRotateInterval();
     }
 
-    $scope.$on('$destroy', function() {
+    //$scope.$on('$destroy', function() {
       
         // Make sure that the interval is destroyed too
-        $scope.stopRotateInterval();
-    });
+    //    $scope.stopRotateInterval();
+    //});
 
     $scope.isRotating = function() {
-        return angular.isDefined(rotateInterval);
+        return isRotating;
+    //    return angular.isDefined(rotateInterval);
     }
 
     $scope.previousIndex = function() {
@@ -67,61 +69,64 @@ angular.module('dashboardApp')
 
     $scope.previousEnvironment = function() {
 
-        var rotating = $scope.isRotating();
-        if (rotating) $scope.stopRotateInterval();
+        $scope.stopAndResetTimer();
 
         $scope.previousIndex();
         $scope.rotateEnvironment();
-
-        if (rotating) $scope.startRotateInterval();
     }
 
     $scope.nextEnvironment = function() {
 
-      var rotating = $scope.isRotating();
-      if (rotating) $scope.stopRotateInterval();
+        $scope.stopAndResetTimer();
 
-      $scope.nextIndex();
-      $scope.rotateEnvironment();
-
-      if (rotating) $scope.startRotateInterval();
+        $scope.nextIndex();
+        $scope.rotateEnvironment();
     }
 
     $scope.togglePlay = function() {
       if ($scope.isRotating()) {
-        $scope.stopRotateInterval();
+        $scope.stopTimer();
       } else {
-        $scope.startRotateInterval();
+        $scope.startTimer();
       }
     }
 
-    $scope.startRotateInterval = function() {
+    $scope.timeout = function() {
+      $scope.fade = true;
+      $scope.nextEnvironment();
+    }
+
+    /*$scope.startRotateInterval = function() {
+      $scope.startTimer();
       rotateInterval = $interval(function() { $scope.nextEnvironment() }, ($scope.delay * 1000));  
     }
 
     $scope.stopRotateInterval = function() {
 
+      $scope.stopTimer();
       if ($scope.isRotating()) {
         $interval.cancel(rotateInterval);
         rotateInterval = undefined;
       }
-    };
+    };*/
     
     $scope.rotateEnvironment = function() {
 
       //$scope.status = undefined;
       $scope.fade = true;
-      $scope.getStatus($scope.environments[$scope.index].code);
+      $scope.getStatus($scope.environments[$scope.index].code, true);
     }
 
-    $scope.getStatus = function(environmentCode) {
+    $scope.getStatus = function(environmentCode, start) {
 
       console.log("rotating", $scope.index, $scope.environments[$scope.index], $scope.delay + "s")
       ApiService.getStatus(environmentCode).then(
             function (result) {
+
                 $scope.fade = false;
                 $scope.status = result;
                 $scope.lines = Math.ceil($scope.status.apis.length / 3);
+                if (start) $scope.startTimer();
             },
             function (error) {
                 $scope.fade = false;
@@ -131,6 +136,28 @@ angular.module('dashboardApp')
         );
     } 
   	
+    $scope.stopAndResetTimer = function() {
+        $scope.stopTimer();
+        $scope.resetTimer();
+    }
+
+    $scope.resetTimer = function() {
+        $scope.$broadcast('timer-set-countdown', $scope.delay);
+        console.log("reseting")
+    }
+
+    $scope.startTimer = function() {
+        isRotating = true;
+        $scope.$broadcast('timer-start');
+        console.log("starting")
+    }
+
+    $scope.stopTimer = function() {
+        isRotating = false;
+        $scope.$broadcast('timer-stop');
+        console.log("stopping")
+    }
+
     $scope.init();
 
 }]);

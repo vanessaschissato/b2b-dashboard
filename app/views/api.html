@@ -25,6 +25,10 @@
 			</div>
 
 			<div class="col-md-4 controls">
+				<span id="timer">
+					<timer auto-start="true" interval="1000" countdown="delay" finish-callback="timeout()">{{countdown}}</timer>
+					<span> | </span>
+				</span>
 				<button class="glyphicon glyphicon-backward" ng-click="previousEnvironment()"></button>
 				<span ng-click="togglePlay()">
 					<button class="glyphicon glyphicon-pause" ng-if="isRotating()"></button>
@@ -40,5 +44,9 @@
 			<span class="title">{{api.name}}</span>
 			<span class="time">{{api.time | number:0}} ms</span>
 		</div>
+	</div>
+
+	<div class="row">
+		<div class="generated col-md-12">Generated {{status.geral.generated}}</div>
 	</div>
 </div>

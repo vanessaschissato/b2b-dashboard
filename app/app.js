@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('dashboardApp', [
-  	'ngRoute'
+  	'ngRoute',
+    'timer'
 ]).
 config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
   

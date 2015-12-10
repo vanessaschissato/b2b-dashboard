@@ -1,5 +1,5 @@
 body {
-	color: white;
+	color: #666;
 }
 
 .animation {
@@ -16,7 +16,6 @@ body {
 .monitor-title, .dropdown-menu {
 	font-size: 3.5em; /* compatibility */
 	font-size: 3vw;
-	color: #666;
 }
 
 .monitor-title img {
@@ -65,6 +64,7 @@ body {
 .monitor-box {
 	border: solid 10px white;
 	border-radius: 15px;
+	color: white;
 }
 
 .monitor-box span {
@@ -77,6 +77,12 @@ body {
 	display: block;
 	font-size: 2.5em; /* compatibility */
 	font-size: 2vw;
+}
+
+.generated {
+	text-align: center;
+	font-size: 1.5em;
+	font-size: 1.5vw;
 }
 
 .success {
@@ -120,6 +126,10 @@ body {
 
 	.monitor-box span.time {
 		font-size: 0.9em;
+	}
+
+	.generated {
+		font-size: 1em;
 	}
 
 }
