@@ -1,4 +1,4 @@
-# ABInbev B2B Dashboard
+# B2B Dashboard
 
 ## Preparing
 
